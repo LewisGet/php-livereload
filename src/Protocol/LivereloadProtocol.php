@@ -22,12 +22,17 @@ class LivereloadProtocol
 
     public function reload($file, $config)
     {
+        if (!is_object($this->app))
+	        return true;
+        
         $this->app->getOutput()->writeln(strftime('%T')." - info - Browser reload $file", OutputInterface::VERBOSITY_VERBOSE);
         $this->sendCommand(array(
             'command' => 'reload',
             'path' => $file,
             'liveCSS' => $config['liveCSS'],
         ));
+        
+        return true;
     }
 
     protected function shutdown()
